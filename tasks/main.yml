@@ -1,0 +1,36 @@
+---
+  - name: Installing multi pkgs using loop
+    dnf:
+      name: "{{ item }}"
+      state: present
+    loop:
+     - ftp
+     - nmap
+     - yum-utils
+     - telnet
+  - name: Create groups
+    group:
+      name: "{{ item }}"
+      state:  present
+    loop:
+      - sales
+      - Ops
+      - HR
+      - support
+  - name: Create multi users
+    user:
+       name: "{{ item.name }}"
+       group:  "{{ item.group }}"
+       uid:  "{{ item.uid }}"
+       state:  present
+    loop:
+      - name: salif
+        group: HR
+        uid: 444
+      - name: kora
+        group: Ops
+        uid:  445
+      - name: ram
+        group:  support
+        uid: 446
+...          
